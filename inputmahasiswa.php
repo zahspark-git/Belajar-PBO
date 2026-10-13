@@ -1,9 +1,4 @@
 <?php
-include "koneksi.php";
-
-$pesan = "";
-$jenispesan = "";
-
     // Menyiapkan variabel
     $nim = "";
     $nama = "";
