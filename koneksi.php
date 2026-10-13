@@ -3,7 +3,7 @@ $koneksi = mysqli_connect(
     "localhost",
     "root",
     "",
-    "db_login"
+    "db_mahasiswa" // Ganti db_login menjadi db_mahasiswa
 );
 
 if (!$koneksi) {

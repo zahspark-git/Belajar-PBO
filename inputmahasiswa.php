@@ -1,25 +1,3 @@
-<?php
-// Menyiapkan variabel
-$nim = "";
-$nama = "";
-$fakultas = "";
-$prodi = "";
-$asal_sekolah = "";
-$semester = "";
-$hobi = "";
-
-// Mengecek apakah form sudah dikirim
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nim          = $_POST["nim"] ?? "";
-    $nama         = $_POST["nama"] ?? "";
-    $fakultas     = $_POST["fakultas"] ?? "";
-    $prodi        = $_POST["prodi"] ?? "";
-    $asal_sekolah = $_POST["asal_sekolah"] ?? "";
-    $semester     = $_POST["semester"] ?? "";
-    $hobi         = $_POST["hobi"] ?? "";
-}
-?>
-
 <!DOCTYPE html>
 <html lang="id">
 
@@ -27,13 +5,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <title>Data Mahasiswa</title>
 
-    <!-- Font Cinzel Google Fonts -->
+    <!-- Google Fonts Cinzel -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet">
 
     <style>
-        /* Impor Font Genshin Drip dari File Lokal */
+        /* Font Genshin Drip Lokal */
         @font-face {
             font-family: 'GenshinDrip';
             src: url('genshin-drip.ttf') format('truetype');
@@ -43,7 +21,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         body {
             font-family: 'Cinzel', 'Georgia', serif;
-            /* Gradasi Biru Mewah & Elegan */
             background: linear-gradient(135deg, #1C2B48 0%, #2A4365 40%, #8EB1D1 80%, #E8ECEF 100%);
             background-attachment: fixed;
             color: #1C2B48;
@@ -72,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             animation: fallHeavySnow linear infinite;
         }
 
-        /* Variasi 20 Butir Salju */
+        /* 20 Butir Salju */
         .snowflake:nth-child(1)  { width: 6px;  height: 6px;  left: 2%;  animation-duration: 5s; animation-delay: 0s;   opacity: 0.9; }
         .snowflake:nth-child(2)  { width: 10px; height: 10px; left: 8%;  animation-duration: 8s; animation-delay: 1.5s; opacity: 0.8; }
         .snowflake:nth-child(3)  { width: 4px;  height: 4px;  left: 14%; animation-duration: 4s; animation-delay: 0.5s; opacity: 0.7; }
@@ -95,24 +72,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .snowflake:nth-child(20) { width: 10px; height: 10px; left: 66%; animation-duration: 7.5s; animation-delay: 0.7s; opacity: 0.9; }
 
         @keyframes fallHeavySnow {
-            0% {
-                transform: translateY(-20px) translateX(0);
-            }
-            50% {
-                transform: translateY(50vh) translateX(35px);
-            }
-            100% {
-                transform: translateY(105vh) translateX(-20px);
-            }
+            0% { transform: translateY(-20px) translateX(0); }
+            50% { transform: translateY(50vh) translateX(35px); }
+            100% { transform: translateY(105vh) translateX(-20px); }
         }
-        /* --------------------------------- */
 
         .container {
             position: relative;
             z-index: 1;
             width: 600px;
             margin: auto;
-            /* Glassmorphism Transparan Mewah */
             background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(12px);
             padding: 35px;
@@ -121,7 +90,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border: 1px solid rgba(255, 255, 255, 0.7);
         }
 
-        /* Judul Menggunakan Font Genshin Drip */
         h1 {
             font-family: 'GenshinDrip', 'Cinzel', serif;
             text-align: center;
@@ -133,7 +101,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             text-transform: uppercase;
         }
 
-        /* Label Menggunakan Font Cinzel */
         label {
             font-family: 'Cinzel', 'Georgia', serif;
             display: block;
@@ -145,8 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             letter-spacing: 0.8px;
         }
 
-        input,
-        select {
+        input, select {
             font-family: 'Cinzel', 'Georgia', serif;
             font-weight: 600;
             width: 100%;
@@ -161,13 +127,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             transition: all 0.3s ease;
         }
 
-        input:focus,
-        select:focus {
+        input:focus, select:focus {
             border-color: #8EB1D1;
             box-shadow: 0 0 10px rgba(142, 177, 209, 0.6);
         }
 
-        /* Tombol Form Simpan Data */
         .btn-submit {
             font-family: 'GenshinDrip', 'Cinzel', serif;
             margin-top: 25px;
@@ -193,6 +157,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         .hasil {
+            display: none;
             margin-top: 30px;
             padding: 22px;
             background: linear-gradient(135deg, #E8ECEF 0%, #C4D8E5 100%);
@@ -218,80 +183,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             font-size: 15px;
         }
 
-        /* --- Link Teks Judul Lagu ke YouTube --- */
-        .bgm-link {
+        .bgm-badge {
             position: fixed;
             bottom: 15px;
             right: 20px;
             z-index: 100;
-            color: rgba(255, 255, 255, 0.75);
-            text-decoration: none;
+            color: rgba(255, 255, 255, 0.85);
             font-family: 'Cinzel', serif;
             font-size: 11px;
             letter-spacing: 0.8px;
-            background: rgba(28, 43, 72, 0.35);
+            background: rgba(28, 43, 72, 0.45);
             padding: 6px 12px;
             border-radius: 15px;
             backdrop-filter: blur(4px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .bgm-link:hover {
-            color: #ffffff;
-            background: rgba(28, 43, 72, 0.85);
-            border-color: #8EB1D1;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
     </style>
-
 </head>
 
 <body>
 
-<!-- Player YouTube Tersembunyi -->
-<div style="position: absolute; width: 0; height: 0; overflow: hidden; opacity: 0;">
-    <iframe id="ytPlayer" width="100" height="100" 
-        src="https://www.youtube.com/embed/RuXa_yxZMGI?enablejsapi=1&autoplay=1&loop=1&playlist=RuXa_yxZMGI" 
-        frameborder="0" allow="autoplay">
-    </iframe>
-</div>
+<!-- Pemutar Audio MP3 Lokal -->
+<audio id="bgmPlayer" src="nod-krai.mp3" loop></audio>
 
-<!-- Link Teks Judul Lagu (Klik untuk buka YouTube) -->
-<a href="https://youtu.be/RuXa_yxZMGI?si=cVEYDFFFCIFNNB8w" target="_blank" class="bgm-link" title="Buka video di YouTube">
-    🎵 Nod-Krai Main Theme
-</a>
+<div class="bgm-badge">🎵 Nod-Krai Main Theme</div>
 
-<!-- Elemen Badai Salju Deras -->
 <div class="snow-container">
-    <div class="snowflake"></div>
-    <div class="snowflake"></div>
-    <div class="snowflake"></div>
-    <div class="snowflake"></div>
-    <div class="snowflake"></div>
-    <div class="snowflake"></div>
-    <div class="snowflake"></div>
-    <div class="snowflake"></div>
-    <div class="snowflake"></div>
-    <div class="snowflake"></div>
-    <div class="snowflake"></div>
-    <div class="snowflake"></div>
-    <div class="snowflake"></div>
-    <div class="snowflake"></div>
-    <div class="snowflake"></div>
-    <div class="snowflake"></div>
-    <div class="snowflake"></div>
-    <div class="snowflake"></div>
-    <div class="snowflake"></div>
-    <div class="snowflake"></div>
+    <div class="snowflake"></div><div class="snowflake"></div>
+    <div class="snowflake"></div><div class="snowflake"></div>
+    <div class="snowflake"></div><div class="snowflake"></div>
+    <div class="snowflake"></div><div class="snowflake"></div>
+    <div class="snowflake"></div><div class="snowflake"></div>
+    <div class="snowflake"></div><div class="snowflake"></div>
+    <div class="snowflake"></div><div class="snowflake"></div>
+    <div class="snowflake"></div><div class="snowflake"></div>
+    <div class="snowflake"></div><div class="snowflake"></div>
+    <div class="snowflake"></div><div class="snowflake"></div>
 </div>
 
 <div class="container">
-
     <h1>INPUT MAHASISWA</h1>
 
-    <form method="POST">
-
+    <form id="formMahasiswa" onsubmit="return false;">
         <label>NIM</label>
         <input type="text" name="nim" required>
 
@@ -323,47 +256,74 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <label>Hobi</label>
         <input type="text" name="hobi">
 
-        <button type="submit" class="btn-submit">Simpan Data</button>
-
+        <button type="button" id="btnSimpan" class="btn-submit">Simpan Data</button>
     </form>
 
-    <?php if ($_SERVER["REQUEST_METHOD"] == "POST") { ?>
-
-        <div class="hasil">
-
-            <h2>DATA MAHASISWA</h2>
-
-            <p><strong>NIM:</strong> <?= htmlspecialchars($nim) ?></p>
-            <p><strong>Nama:</strong> <?= htmlspecialchars($nama) ?></p>
-            <p><strong>Fakultas:</strong> <?= htmlspecialchars($fakultas) ?></p>
-            <p><strong>Program Studi:</strong> <?= htmlspecialchars($prodi) ?></p>
-            <p><strong>Asal Sekolah:</strong> <?= htmlspecialchars($asal_sekolah) ?></p>
-            <p><strong>Semester:</strong> <?= htmlspecialchars($semester) ?></p>
-            <p><strong>Hobi:</strong> <?= htmlspecialchars($hobi) ?></p>
-
-        </div>
-
-    <?php } ?>
-
+    <div class="hasil" id="boxHasil">
+        <h2>DATA MAHASISWA</h2>
+        <p><strong>NIM:</strong> <span id="resNim"></span></p>
+        <p><strong>Nama:</strong> <span id="resNama"></span></p>
+        <p><strong>Fakultas:</strong> <span id="resFakultas"></span></p>
+        <p><strong>Program Studi:</strong> <span id="resProdi"></span></p>
+        <p><strong>Asal Sekolah:</strong> <span id="resAsal"></span></p>
+        <p><strong>Semester:</strong> <span id="resSemester"></span></p>
+        <p><strong>Hobi:</strong> <span id="resHobi"></span></p>
+    </div>
 </div>
 
 <script>
-    let isPlaying = false;
-    const playerFrame = document.getElementById('ytPlayer');
-
-    function playAudio() {
-        playerFrame.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-        isPlaying = true;
-    }
-
-    // Pemicu Otomatis: Musik menyala begitu ada klik / ketikan pertama di halaman
+    // --- AUTOPLAY MUSIK MP3 LOKAL ---
+    const bgm = document.getElementById('bgmPlayer');
     ['click', 'touchstart', 'keydown'].forEach(event => {
         document.addEventListener(event, function autoPlay() {
-            if (!isPlaying) {
-                playAudio();
+            if (bgm.paused) {
+                bgm.play().catch(e => console.log("Autoplay diblokir:", e));
             }
-            document.removeEventListener(event, autoPlay);
         }, { once: true });
+    });
+
+    // --- PROSES SIMPAN VIA AJAX (TANPA RELOAD PAGE) ---
+    document.getElementById('btnSimpan').addEventListener('click', function() {
+        const form = document.getElementById('formMahasiswa');
+        
+        // Validasi isian wajib diisi
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+
+        const formData = new FormData(form);
+
+        fetch('simpan.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(res => {
+            if (res.status === 'success') {
+                alert('Data berhasil disimpan ke database!');
+                
+                // Tampilkan data ke card hasil bawah
+                document.getElementById('resNim').textContent = res.data.nim;
+                document.getElementById('resNama').textContent = res.data.nama;
+                document.getElementById('resFakultas').textContent = res.data.fakultas;
+                document.getElementById('resProdi').textContent = res.data.prodi;
+                document.getElementById('resAsal').textContent = res.data.asal_sekolah;
+                document.getElementById('resSemester').textContent = res.data.semester;
+                document.getElementById('resHobi').textContent = res.data.hobi;
+                
+                document.getElementById('boxHasil').style.display = 'block';
+
+                // MENGOSONGKAN ISI FORM SECARA OTOMATIS
+                form.reset();
+            } else {
+                alert('Gagal menyimpan: ' + res.message);
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert('Terjadi kesalahan sistem.');
+        });
     });
 </script>
 
